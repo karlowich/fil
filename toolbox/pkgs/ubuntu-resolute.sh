@@ -18,6 +18,7 @@ apt-get -qy update
 apt-get -qy install \
 	build-essential \
 	clang \
+	e2fsprogs \
 	git \
 	libaio-dev \
 	libbpf-dev \
@@ -35,5 +36,6 @@ apt-get -qy install \
 	python3-venv \
 	uuid-dev \
 	wget \
+	xfsprogs \
 	xfslibs-dev \
 	zlib1g-dev
