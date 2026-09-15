@@ -30,7 +30,9 @@ apt-get -qy install \
 	meson \
 	ninja-build \
 	pkg-config \
+	python3-dev \
 	python3-pyelftools \
+	python3-venv \
 	uuid-dev \
 	wget \
 	xfslibs-dev \
