@@ -98,6 +98,10 @@ steps:
     {{ config.fil.venv }}/bin/pip install {{ config.fil.source }}/python
     {{ config.fil.venv }}/bin/python -c "import fil; print(fil.__file__)"
 
+- name: debug_xal_trace
+  run: |
+    bash {{ config.fil.source }}/cijoe/auxiliary/debug_xal_trace.sh {{ config.xal.repository.path }} {{ config.fil.testing.dev }} {{ config.fil.source }}
+
 - name: prep_xfs
   uses: prep_xfs
 

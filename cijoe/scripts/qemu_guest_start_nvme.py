@@ -6,10 +6,8 @@
 Start a qemu-guest with a single NVMe device
 ============================================
 
-One controller with one namespace at 0000:01:00.0, which the kernel exposes as
-/dev/nvme0n1. Its logical blocks are 512 bytes, as on the drives of the bench host;
-with 4KiB blocks, mkfs.xfs picks a sector size to match and the file sizes xal then
-reports are wrong, large enough for fil to be killed while allocating buffers.
+One controller with one namespace of 4KiB logical blocks, at 0000:01:00.0, which the
+kernel exposes as /dev/nvme0n1.
 
 Retargetable: false
 -------------------
@@ -29,7 +27,7 @@ def add_args(parser: ArgumentParser):
 
 def qemu_nvme_args(nvme_img_root):
     """Return the drives and qemu arguments, with the backing image in 'nvme_img_root'"""
-    lbads = 9
+    lbads = 12
     ctrl_id = "nvme0"
     drive_id = f"{ctrl_id}n1"
     root_port = "pcie_root_port1"
