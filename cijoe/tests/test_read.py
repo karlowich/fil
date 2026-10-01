@@ -16,6 +16,9 @@ def testing(cijoe):
     """config.fil.testing, with the number of files in the dataset"""
 
     testing = dict(cijoe.getconf("fil.testing"))
+    testing["verify"] = (
+        f"{cijoe.getconf('fil.source')}/cijoe/auxiliary/verify_dataset.py"
+    )
 
     err, state = cijoe.run(
         f"find {testing['mountpoint']}/{testing['data_dir']} -type f | wc -l"
@@ -38,3 +41,17 @@ def test_filperf(cijoe, testing, backend, extra):
     )
     assert not err
     assert f"Number of files in the dataset: {testing['n_files']}\n" in state.output()
+
+
+@pytest.mark.parametrize("backend,extra", BACKENDS, ids=BACKEND_IDS)
+def test_verify_content(cijoe, testing, backend, extra):
+    """Every buffer from the Python binding matches a file on disk and its label"""
+
+    venv = cijoe.getconf("fil.venv")
+
+    err, _ = cijoe.run(
+        f"{venv}/bin/python {testing['verify']} --dev {testing['dev']} "
+        f"--mnt {testing['mountpoint']} --data-dir {testing['data_dir']} "
+        f"--backend {backend} {extra}"
+    )
+    assert not err
